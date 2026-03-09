@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+
+android {
+    // Modern Gradle expects an equals sign or a specific block
+    namespace = "de.blinkt.openvpn" 
+    compileSdk = 34
+
+    defaultConfig {
+        minSdk = 21
+        targetSdk = 34
+        
+        // This ensures the library doesn't try to use a different version
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+
+    buildFeatures {
+        aidl = true
+        buildConfig = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        // Change these to VERSION_17 to match your main app!
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    sourceSets {
+        main {
+            // This tells Gradle to look for AIDL files in these folders
+            aidl.srcDirs = ['src/main/aidl']
+            java.srcDirs = ['src/main/java']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    
+    // Updated these to more stable versions
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.core:core-ktx:1.12.0'
+}
